@@ -213,7 +213,7 @@
             throw new Error("Gagal menyedot database melalui seluruh proxy.");
         }
 
-        // 1. AUTO SCANNER GLOBAL (Bebas blokir, termasuk 18+)
+        // 1. AUTO SCANNER GLOBAL (Limit Max 3.000 Saluran Aktif)
         async function startAutoScanner() {
             if (isRunning) return;
             isRunning = true;
@@ -221,49 +221,62 @@
             document.getElementById('btnScan').classList.add('opacity-50');
             document.getElementById('sysLog').innerHTML = '';
             
-            logSys("Mengaktifkan CORS Injector & Multi-Proxy Crawler...");
-            updateUI("Connecting Global DB...", 15);
+            logSys("Mengaktifkan Lightweight Global Crawler (Maks. 3.000 Channel)...");
+            updateUI("Menghubungkan Database...", 15);
 
             const endpoints = [
-                'https://iptv-org.github.io/iptv/index.country.m3u',
-                'https://iptv-org.github.io/iptv/categories/xxx.m3u' // 18+ Unrestricted stream category
+                'https://iptv-org.github.io/iptv/categories/movies.m3u',
+                'https://iptv-org.github.io/iptv/categories/sports.m3u',
+                'https://iptv-org.github.io/iptv/categories/entertainment.m3u',
+                'https://iptv-org.github.io/iptv/categories/xxx.m3u' // 18+ Unrestricted category
             ];
 
             try {
                 let rawCombine = "";
-                for(let i=0; i<endpoints.length; i++) {
+                for(let i = 0; i < endpoints.length; i++) {
                     try {
+                        logSys(`Mengunduh segmen ${i+1} dari ${endpoints.length}...`);
                         const text = await fetchRobust(endpoints[i]);
                         rawCombine += text + "\n";
-                        logSys(`Segment ${i+1} berhasil ditarik.`);
+                        logSys(`✅ Segmen ${i+1} berhasil dimuat.`);
                     } catch(err) {
-                        logSys(`Peringatan: Segment ${i+1} dilewati.`);
+                        logSys(`⚠️ Segmen ${i+1} melewati batas waktu, beralih...`);
                     }
-                    updateUI(`Downloading Segment ${i+1}...`, 20 + (35 * (i+1)));
+                    updateUI(`Downloading Segment ${i+1}...`, 20 + (20 * (i+1)));
                 }
 
-                if (!rawCombine.trim()) {
-                    // Fallback cadangan instan agar aplikasi tetap menampilkan channel valid jika jaringan utama ketat
-                    rawCombine = `#EXTINF:-1,Global News HD\nhttps://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8\n#EXTINF:-1,Adult Unrestricted 18+\nhttps://sample-videos.com/video123/m3u8/hls-sample-1mb.m3u8`;
+                if (!rawCombine.trim() || rawCombine.length < 100) {
+                    throw new Error("Semua segmen gagal dimuat oleh proxy.");
                 }
 
+                logSys("Mengurai struktur M3U & menerapkan limit maksimal 3.000 saluran...");
                 const lines = rawCombine.split(/\r?\n/);
                 let currentMeta = "";
+                
                 for (let line of lines) {
                     line = line.trim();
                     if (!line) continue;
-                    if (line.startsWith('#EXTINF:')) currentMeta = line;
-                    else if (line.startsWith('http')) {
-                        dbAll.push({
-                            extinf: currentMeta || `#EXTINF:-1,Global Unrestricted Channel`,
-                            url: line,
-                            isLive: null
-                        });
+                    if (line.startsWith('#EXTINF:')) {
+                        currentMeta = line;
+                    } else if (line.startsWith('http')) {
+                        if (!line.includes('test-streams') && !line.includes('sample-videos')) {
+                            dbAll.push({
+                                extinf: currentMeta || `#EXTINF:-1,Global Unrestricted Channel`,
+                                url: line,
+                                isLive: null
+                            });
+                        }
                         currentMeta = "";
+                    }
+
+                    // Hentikan pengambilan data jika sudah mencapai batas 3.000 channel
+                    if (dbAll.length >= 3000) {
+                        logSys("Batas maksimal 3.000 saluran tercapai untuk scan ini.");
+                        break;
                     }
                 }
                 
-                logSys(`Auto-Scanner Selesai. Total terkumpul: ${dbAll.length} saluran.`);
+                logSys(`Auto-Scanner Selesai! Total dibatasi: ${dbAll.length} saluran.`);
                 updateUI("Standby", 100);
                 renderOutput();
 
@@ -274,7 +287,6 @@
             isRunning = false;
             document.getElementById('btnScan').classList.remove('opacity-50');
         }
-
         // 2. HAPUS DUPLIKAT (Otomatis hapus link sama di app & database)
         function removeDuplicates() {
             if (dbAll.length === 0) return alert("Database kosong.");
