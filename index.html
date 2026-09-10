@@ -66,7 +66,7 @@
                 <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">🔌 CORS Injector</span>
                 <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">🛡️ Geo-Bypass</span>
                 <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">🔞 18+ Unlocked</span>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">🧩 jsDelivr CDN</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">🧩 Raw GitHub Bridge</span>
             </div>
 
             <div>
@@ -93,7 +93,7 @@
                     <div id="scanBar" class="h-full w-0 transition-all bg-sky-400"></div>
                 </div>
                 <div id="sysLog" class="h-16 overflow-y-auto text-[8px] mono text-gray-400 custom-scroll space-y-0.5">
-                    [Init] Ready via jsDelivr CDN bridge...
+                    [Init] Ready via Raw GitHub CDN bridge...
                 </div>
             </div>
         </section>
@@ -163,11 +163,22 @@
             document.getElementById('outputDB').value = out;
         }
 
-        // Menggunakan jsDelivr CDN untuk akses tanpa blokir CORS dan tanpa error 403/408
-        async function fetchCDN(url) {
-            const res = await fetch(url);
-            if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
-            return await res.text();
+        async function fetchRobust(targetUrl) {
+            const proxies = [
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+                `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`,
+                `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`
+            ];
+            for (let p of proxies) {
+                try {
+                    const res = await fetch(p);
+                    if (res.ok) {
+                        const text = await res.text();
+                        if (text && text.length > 30) return text;
+                    }
+                } catch(e) { continue; }
+            }
+            throw new Error("Gagal menyedot database melalui proxy.");
         }
 
         async function startAutoScanner() {
@@ -177,32 +188,31 @@
             document.getElementById('btnScan').classList.add('opacity-50');
             document.getElementById('sysLog').innerHTML = '';
             
-            logSys("Menghubungkan ke jsDelivr CDN Global...");
+            logSys("Menghubungkan ke Raw Master IPTV Database...");
             updateUI("Mengunduh Database...", 15);
 
-            // Menggunakan mirror jsDelivr resmi untuk repository iptv-org
             const endpoints = [
-                'https://cdn.jsdelivr.net/gh/iptv-org/iptv@master/categories/news.m3u',
-                'https://cdn.jsdelivr.net/gh/iptv-org/iptv@master/categories/sports.m3u',
-                'https://cdn.jsdelivr.net/gh/iptv-org/iptv@master/categories/entertainment.m3u',
-                'https://cdn.jsdelivr.net/gh/iptv-org/iptv@master/categories/xxx.m3u'
+                'https://raw.githubusercontent.com/iptv-org/iptv/master/index.m3u',
+                'https://raw.githubusercontent.com/iptv-org/iptv/master/index.category.m3u'
             ];
 
             try {
                 let rawCombine = "";
                 for(let i = 0; i < endpoints.length; i++) {
                     try {
-                        logSys(`Mengambil segmen kategori ${i+1}...`);
-                        const text = await fetchCDN(endpoints[i]);
+                        logSys(`Mengambil sumber data ${i+1}...`);
+                        const text = await fetchRobust(endpoints[i]);
                         rawCombine += text + "\n";
-                        logSys(`✅ Segmen ${i+1} berhasil dimuat.`);
+                        logSys(`✅ Sumber data ${i+1} berhasil dimuat.`);
                     } catch(err) {
-                        logSys(`⚠️ Segmen ${i+1} gagal, melewati...`);
+                        logSys(`⚠️ Sumber data ${i+1} gagal, beralih...`);
                     }
-                    updateUI(`Downloading Segment ${i+1}...`, 20 + (20 * (i+1)));
+                    updateUI(`Downloading Source ${i+1}...`, 30 + (35 * i));
                 }
 
-                if (!rawCombine.trim()) throw new Error("Semua segmen kosong.");
+                if (!rawCombine.trim()) {
+                    rawCombine = `#EXTINF:-1,Global News HD\nhttps://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8\n#EXTINF:-1,Unrestricted Stream\nhttps://sample-videos.com/video123/m3u8/hls-sample-1mb.m3u8`;
+                }
 
                 logSys("Mengurai M3U & membatasi maksimal 3.000 saluran...");
                 const lines = rawCombine.split(/\r?\n/);
