@@ -40,7 +40,7 @@
             <div id="headerLogo" class="w-7 h-7 rounded flex items-center justify-center font-bold text-sm border border-pink-400 shadow-[0_0_8px_#ec4899]">⚡</div>
             <div>
                 <h1 id="headerTitle" class="font-bold text-xs tracking-wide text-pink-400">GEMA MUSIC OMNI-V20</h1>
-                <p class="text-[9px] text-gray-400 uppercase">Enterprise 50K Keyword Scanner Engine</p>
+                <p class="text-[9px] text-gray-400 uppercase">Enterprise 50K Gist & Local Storage Engine</p>
             </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -104,13 +104,11 @@
                 <input type="file" id="localFile" accept=".m3u,.m3u8" onchange="importLocalFile(event)" class="w-full bg-black/50 border border-pink-500/40 rounded p-1 text-[10px] text-gray-300 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-pink-950 file:text-pink-300 hover:file:bg-pink-900">
             </div>
 
-            <!-- 4. Cloudflare R2 Config -->
-            <div>
-                <h2 class="text-[10px] font-bold uppercase tracking-wider mb-1.5 text-pink-400">4. Cloudflare R2 Database Sync</h2>
-                <div class="space-y-1.5">
-                    <input type="text" id="r2Url" placeholder="R2 Worker Endpoint (https://...)" class="w-full bg-black/50 border border-pink-500/40 rounded p-1.5 focus:outline-none text-gray-200">
-                    <input type="password" id="r2Token" placeholder="R2 Auth Token / Bearer Key" class="w-full bg-black/50 border border-pink-500/40 rounded p-1.5 focus:outline-none text-gray-200">
-                </div>
+            <!-- 4. Informasi Penyimpanan GitHub Gist -->
+            <div class="bg-black/50 border border-pink-500/30 rounded p-2 text-[9px] text-gray-300 space-y-1">
+                <span class="font-bold text-pink-400 block uppercase">💡 Tips Penyimpanan Gist & Lokal:</span>
+                <p>• Database otomatis ditarik dari Gist Anda secara <i>real-time</i>.</p>
+                <p>• Gunakan tombol <b>Download M3U</b> untuk menyimpan hasil filter bersih langsung ke perangkat Anda secara gratis tanpa batas.</p>
             </div>
 
             <!-- Log Console -->
@@ -123,7 +121,7 @@
                     <div id="scanBar" class="h-full w-0 transition-all bg-pink-500"></div>
                 </div>
                 <div id="sysLog" class="h-16 overflow-y-auto text-[8px] mono text-gray-400 custom-scroll space-y-0.5">
-                    [Init] Ready for keyword & filtered 50K multi-source extraction...
+                    [Init] Ready for 50K Gist & local optimized extraction...
                 </div>
             </div>
         </section>
@@ -136,13 +134,12 @@
                     <p class="text-[9px] text-gray-400">Total: <span id="valTotal" class="text-pink-300 font-bold">0</span> | Aktif: <span id="valLive" class="text-emerald-400 font-bold">0</span> | Mati: <span id="valDead" class="text-red-400 font-bold">0</span></p>
                 </div>
 
-                <!-- Action Toolbar -->
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 w-full sm:w-auto">
-                    <button onclick="removeDuplicates()" class="py-1 px-2 bg-gray-950 border border-pink-500/40 hover:bg-pink-900/40 text-pink-300 rounded font-bold transition">🧹 Hapus Duplikat</button>
-                    <button onclick="startAutoChecker()" id="btnCheck" class="py-1 px-2 bg-gray-950 border border-pink-500/40 hover:bg-pink-900/40 text-pink-300 rounded font-bold transition">⚡ High-Acc Checker</button>
-                    <button onclick="deleteAllChannels()" class="py-1 px-2 bg-red-950/40 border border-red-500/40 hover:bg-red-900/50 text-red-400 rounded font-bold transition">🗑️ Hapus Semua</button>
-                    <button onclick="syncToDatabase()" class="py-1 px-2 bg-gray-950 border border-pink-500/40 hover:bg-pink-900/40 text-pink-300 rounded font-bold transition">☁️ Simpan R2</button>
-                    <button onclick="downloadActive()" class="py-1 px-2 bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-400 rounded font-bold transition">💾 Download M3U</button>
+                <!-- Action Toolbar (Tanpa R2) -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 w-full sm:w-auto">
+                    <button onclick="removeDuplicates()" class="py-1 px-2.5 bg-gray-950 border border-pink-500/40 hover:bg-pink-900/40 text-pink-300 rounded font-bold transition">🧹 Hapus Duplikat</button>
+                    <button onclick="startAutoChecker()" id="btnCheck" class="py-1 px-2.5 bg-gray-950 border border-pink-500/40 hover:bg-pink-900/40 text-pink-300 rounded font-bold transition">⚡ High-Acc Checker</button>
+                    <button onclick="deleteAllChannels()" class="py-1 px-2.5 bg-red-950/40 border border-red-500/40 hover:bg-red-900/50 text-red-400 rounded font-bold transition">🗑️ Hapus Semua</button>
+                    <button onclick="downloadActive()" class="py-1 px-2.5 bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-400 rounded font-bold transition">💾 Download M3U</button>
                 </div>
             </div>
 
@@ -193,7 +190,6 @@
             document.documentElement.style.setProperty('--glow-color', t.glow);
             document.documentElement.style.setProperty('--glow-shadow', t.shadow);
             
-            // Update warna teks header & border aksesoris dinamis
             const logo = document.getElementById('headerLogo');
             const title = document.getElementById('headerTitle');
             logo.style.borderColor = t.glow;
@@ -234,15 +230,10 @@
         function isUnwantedChannel(extinf) {
             const lower = extinf.toLowerCase();
             const unwanted = [
-                // News
                 'news', 'berita', 'cnn', 'bbc news', 'fox news', 'msnbc', 'cnbc', 'skynews', 'al jazeera', 'rt news',
-                // Business
                 'business', 'bisnis', 'finance', 'market', 'stock', 'bloomberg', 'wall street', 'economy', 'trading',
-                // Religious
                 'religi', 'agama', 'islam', 'muslim', 'quran', 'masjid', 'church', 'kristen', 'katolik', 'buddha', 'hindu', 'vatican', 'gospel', 'prayer', 'preach', 'bible', 'alquran', 'taqwa', 'dakwah',
-                // Documentary
                 'documentary', 'dokumenter', 'docu', 'history channel', 'discovery', 'nat geo', 'national geographic', 'animal planet', 'science channel',
-                // Culture
                 'culture', 'budaya', 'tradisi', 'heritage', 'folklore'
             ];
             return unwanted.some(word => lower.includes(word));
@@ -261,9 +252,7 @@
                     currentMeta = line;
                 } else if (line.startsWith('http')) {
                     if (currentMeta) {
-                        // Cek filter grup yang dilarang
                         if (!isUnwantedChannel(currentMeta)) {
-                            // Jika ada keyword filter, pastikan cocok dengan keyword
                             let matchKeyword = true;
                             if (keywordFilter) {
                                 const kw = keywordFilter.toLowerCase();
@@ -271,7 +260,6 @@
                             }
 
                             if (matchKeyword) {
-                                // Hindari duplikat URL
                                 if (!dbAll.some(existing => existing.url === line)) {
                                     dbAll.push({
                                             extinf: currentMeta,
@@ -304,7 +292,6 @@
             updateUI("Scanning Keyword...", 20);
 
             try {
-                // Tarik dari Gist & Global Index, lalu filter berdasarkan kata kunci
                 const endpoints = [
                     GIST_URL,
                     'https://iptv-org.github.io/iptv/index.m3u',
@@ -318,7 +305,7 @@
                         if (res.ok) {
                             const text = await res.text();
                             parseM3UText(text, 30000, keyword);
-                            logSys(`✅ Sumber ${i+1} berhasil dipindai untuk keyword "${keyword}".`);
+                            logSys(`✅ Sumber ${i+1} berhasil dipindai.`);
                         }
                     } catch(err) {
                         logSys(`⚠️ Sumber ${i+1} dilewati.`);
@@ -326,7 +313,7 @@
                     updateUI(`Scanning Source ${i+1}...`, 25 + (20 * i));
                 }
 
-                logSys(`Pencarian Selesai! Ditemukan ${dbAll.length} channel aktif untuk keyword "${keyword}" (Bersih dari News/Religi/Docu/Business).`);
+                logSys(`Pencarian Selesai! Ditemukan ${dbAll.length} channel aktif untuk keyword "${keyword}".`);
                 updateUI("Standby", 100);
                 renderOutput();
 
@@ -383,7 +370,7 @@
                     updateUI(`Scanning Index ${i+1}...`, 60 + (15 * i));
                 }
 
-                logSys(`Omni-Scanner Selesai! Total Terkumpul: ${dbAll.length} Channel (Murni Tanpa News, Business, Religi, Docu, Culture).`);
+                logSys(`Omni-Scanner Selesai! Total Terkumpul: ${dbAll.length} Channel Bersih.`);
                 updateUI("Standby", 100);
                 renderOutput();
 
@@ -439,7 +426,7 @@
             alert(`${removed} saluran duplikat berhasil dihapus.`);
         }
 
-        // 6. HIGH-ACCURACY AUTO CHECKER (Pemisah Aktif & Mati Presisi Tinggi)
+        // 6. HIGH-ACCURACY AUTO CHECKER
         async function startAutoChecker() {
             if (isRunning) return;
             if (dbAll.length === 0) return alert("Database kosong.");
@@ -504,34 +491,6 @@
             a.download = 'GEMA_MUSIC_Filtered_50K_Database.m3u';
             a.click();
             URL.revokeObjectURL(url);
-        }
-
-        // 8. SYNC TO CLOUDFLARE R2
-        async function syncToDatabase() {
-            const endpoint = document.getElementById('r2Url').value.trim();
-            const token = document.getElementById('r2Token').value.trim();
-            if (!endpoint || !token) return alert("Masukkan URL Worker Cloudflare R2 dan Token Auth Anda!");
-            if (dbAll.length === 0) return alert("Database kosong.");
-            logSys(`Menyinkronkan database ke Cloudflare R2...`);
-            let out = "#EXTM3U\n\n";
-            dbAll.forEach(c => { out += `${c.extinf}\n${c.url}\n\n`; });
-            try {
-                const res = await fetch(endpoint, {
-                    method: 'PUT',
-                    headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'text/plain' },
-                    body: out
-                });
-                if (res.ok) {
-                    logSys("Sinkronisasi Cloudflare R2 Berhasil!");
-                    alert("Database berhasil diperbarui di Cloudflare R2!");
-                } else {
-                    logSys("Gagal sinkronisasi ke R2.");
-                    alert("Gagal sinkronisasi. Periksa kembali Endpoint & Token Anda.");
-                }
-            } catch (e) {
-                logSys(`Error R2 Sync: Koneksi ditolak CORS.`);
-                alert("Gagal terhubung ke Cloudflare R2 Worker.");
-            }
         }
     </script>
 </body>
