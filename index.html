@@ -8,10 +8,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-base: #020617;
-            --bg-card: rgba(15, 23, 42, 0.85);
-            --glow-color: #38bdf8;
-            --glow-shadow: rgba(56, 189, 248, 0.3);
+            --bg-base: #18021d;
+            --bg-card: rgba(28, 10, 36, 0.85);
+            --glow-color: #ec4899;
+            --glow-shadow: rgba(236, 72, 153, 0.35);
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -22,9 +22,9 @@
         .mono { font-family: 'JetBrains Mono', monospace; }
         .glow-box {
             border: 1px solid var(--glow-color);
-            box-shadow: 0 0 10px var(--glow-shadow), inset 0 0 4px var(--glow-shadow);
+            box-shadow: 0 0 12px var(--glow-shadow), inset 0 0 4px var(--glow-shadow);
             background-color: var(--bg-card);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
         }
         .custom-scroll::-webkit-scrollbar { width: 4px; height: 4px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -37,25 +37,31 @@
     <!-- Header -->
     <header class="glow-box rounded-lg p-2.5 flex items-center justify-between shrink-0">
         <div class="flex items-center space-x-2.5">
-            <div class="w-7 h-7 rounded flex items-center justify-center font-bold text-sm border border-sky-400 shadow-[0_0_6px_#38bdf8]">⚡</div>
+            <div id="headerLogo" class="w-7 h-7 rounded flex items-center justify-center font-bold text-sm border border-pink-400 shadow-[0_0_8px_#ec4899]">⚡</div>
             <div>
-                <h1 class="font-bold text-xs tracking-wide text-sky-400">GEMA MUSIC OMNI-V20</h1>
-                <p class="text-[9px] text-gray-400 uppercase">Enterprise 50K Engine & Gist Sync</p>
+                <h1 id="headerTitle" class="font-bold text-xs tracking-wide text-pink-400">GEMA MUSIC OMNI-V20</h1>
+                <p class="text-[9px] text-gray-400 uppercase">Enterprise 50K Keyword Scanner Engine</p>
             </div>
         </div>
         <div class="flex items-center space-x-2">
-            <span class="text-[10px] text-sky-300 font-medium hidden sm:inline">Theme:</span>
-            <select id="themeSelect" onchange="changeTheme(this.value)" class="bg-gray-950 border border-sky-400/60 rounded px-2 py-1 text-sky-300 font-medium focus:outline-none glow-box">
-                <option value="0">1. Cyber Blue</option><option value="1">2. Deep Obsidian</option>
-                <option value="2">3. Matrix Emerald</option><option value="3">4. Quantum Purple</option>
-                <option value="4">5. Solar Flare</option><option value="5">6. Ruby Crimson</option>
-                <option value="6">7. Arctic Frost</option><option value="7">8. Midnight Indigo</option>
-                <option value="8">9. Neon Magenta</option><option value="9">10. Carbon Gold</option>
-                <option value="10">11. Plasma Orange</option><option value="11">12. Holographic Teal</option>
-                <option value="12">13. Slate Minimal</option><option value="13">14. Cyberpunk Yellow</option>
-                <option value="14">15. Zenith Violet</option><option value="15">16. Toxic Lime</option>
-                <option value="16">17. Neptune Cyan</option><option value="17">18. Velvet Rose</option>
-                <option value="18">19. Titanium Gray</option><option value="19">20. Phantom Black</option>
+            <span class="text-[10px] text-pink-300 font-medium hidden sm:inline">Theme (30):</span>
+            <select id="themeSelect" onchange="changeTheme(this.value)" class="bg-gray-950 border border-pink-400/60 rounded px-2 py-1 text-pink-300 font-medium focus:outline-none glow-box">
+                <option value="0" selected>1. Neon Magenta (Default)</option>
+                <option value="1">2. Cyber Blue</option><option value="2">3. Deep Obsidian</option>
+                <option value="3">4. Matrix Emerald</option><option value="4">5. Quantum Purple</option>
+                <option value="5">6. Solar Flare</option><option value="6">7. Ruby Crimson</option>
+                <option value="7">8. Arctic Frost</option><option value="8">9. Midnight Indigo</option>
+                <option value="9">10. Carbon Gold</option><option value="10">11. Plasma Orange</option>
+                <option value="11">12. Holographic Teal</option><option value="12">13. Slate Minimal</option>
+                <option value="13">14. Cyberpunk Yellow</option><option value="14">15. Zenith Violet</option>
+                <option value="15">16. Toxic Lime</option><option value="16">17. Neptune Cyan</option>
+                <option value="17">18. Velvet Rose</option><option value="18">19. Titanium Gray</option>
+                <option value="19">20. Phantom Black</option><option value="20">21. Royal Amethyst</option>
+                <option value="21">22. Emerald Sunset</option><option value="22">23. Copper Horizon</option>
+                <option value="23">24. Obsidian Sapphire</option><option value="24">25. Neon Tangerine</option>
+                <option value="25">26. Mystic Lavender</option><option value="26">27. Electric Cobalt</option>
+                <option value="27">28. Solar Amber</option><option value="28">29. Cyberpunk Crimson</option>
+                <option value="29">30. Arctic Aurora</option>
             </select>
         </div>
     </header>
@@ -66,92 +72,133 @@
         <!-- Panel Kontrol Kiri -->
         <section class="lg:col-span-4 glow-box p-3 rounded-lg flex flex-col gap-2.5 overflow-y-auto custom-script">
             
-            <div class="flex flex-wrap gap-1 pb-2 border-b border-sky-500/30">
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">🛡️ No-News/Religi</span>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">🔞 18+ Unlocked</span>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">🔗 Gist Auto-Sync</span>
-                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-sky-400/40 text-sky-300">⚡ Max 50K Ch</span>
+            <div class="flex flex-wrap gap-1 pb-2 border-b border-pink-500/30">
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-pink-400/40 text-pink-300">🛡️ Filter News/Religi/Docu</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-pink-400/40 text-pink-300">🔞 18+ Unlocked</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-pink-400/40 text-pink-300">🔍 Keyword Engine</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-black/40 border border-pink-400/40 text-pink-300">🔗 Gist Auto-Sync</span>
             </div>
 
-            <!-- 1. Auto Scanner & GitHub Gist Sync -->
+            <!-- 1. Auto Keyword Scanner -->
             <div>
-                <h2 class="text-[10px] font-bold uppercase tracking-wider mb-1.5 text-sky-400">1. Global Omni-Scanner & Permanent Gist</h2>
-                <button onclick="startAutoScannerWithGist()" id="btnScan" class="w-full py-2 bg-gray-950 border border-sky-400 rounded hover:bg-sky-900/40 text-sky-300 font-bold transition flex items-center justify-center gap-1.5 shadow-[0_0_8px_rgba(56,189,248,0.2)]">
-                    <span>🚀</span> JALANKAN SCANNER + GIST SYNC
+                <h2 class="text-[10px] font-bold uppercase tracking-wider mb-1.5 text-pink-400">1. Auto Scan Berdasarkan Kata Kunci</h2>
+                <div class="flex gap-1.5">
+                    <input type="text" id="keywordInput" placeholder="Cth: rock, sport, movie, adult, music..." class="w-full bg-black/50 border border-pink-500/40 rounded p-1.5 focus:outline-none text-gray-200">
+                    <button onclick="startKeywordScanner()" id="btnKeywordScan" class="px-3 py-1.5 bg-gray-950 border border-pink-400 rounded hover:bg-pink-900/40 text-pink-300 font-bold transition whitespace-nowrap shadow-[0_0_6px_rgba(236,72,153,0.3)]">
+                        Cari
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. Global Omni-Scanner & Gist Sync -->
+            <div>
+                <h2 class="text-[10px] font-bold uppercase tracking-wider mb-1.5 text-pink-400">2. Global Omni-Scanner & Permanent Gist</h2>
+                <button onclick="startAutoScannerWithGist()" id="btnScan" class="w-full py-2 bg-gray-950 border border-pink-400 rounded hover:bg-pink-900/40 text-pink-300 font-bold transition flex items-center justify-center gap-1.5 shadow-[0_0_8px_rgba(236,72,153,0.3)]">
+                    <span>🚀</span> JALANKAN GLOBAL SCANNER + GIST
                 </button>
             </div>
 
-            <!-- 2. Input File Lokal -->
+            <!-- 3. Input File Lokal -->
             <div>
-                <h2 class="text-[10px] font-bold uppercase tracking-wider mb-1.5 text-sky-400">2. Input Playlist Perangkat Lokal (.m3u)</h2>
-                <input type="file" id="localFile" accept=".m3u,.m3u8" onchange="importLocalFile(event)" class="w-full bg-black/50 border border-sky-500/40 rounded p-1 text-[10px] text-gray-300 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-sky-950 file:text-sky-300 hover:file:bg-sky-900">
+                <h2 class="text-[10px] font-bold uppercase tracking-wider mb-1.5 text-pink-400">3. Input Playlist Perangkat Lokal (.m3u)</h2>
+                <input type="file" id="localFile" accept=".m3u,.m3u8" onchange="importLocalFile(event)" class="w-full bg-black/50 border border-pink-500/40 rounded p-1 text-[10px] text-gray-300 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-[10px] file:font-bold file:bg-pink-950 file:text-pink-300 hover:file:bg-pink-900">
             </div>
 
-            <!-- 3. Cloudflare R2 Config -->
+            <!-- 4. Cloudflare R2 Config -->
             <div>
-                <h2 class="text-[10px] font-bold uppercase tracking-wider mb-1.5 text-sky-400">3. Cloudflare R2 Database Sync</h2>
+                <h2 class="text-[10px] font-bold uppercase tracking-wider mb-1.5 text-pink-400">4. Cloudflare R2 Database Sync</h2>
                 <div class="space-y-1.5">
-                    <input type="text" id="r2Url" placeholder="R2 Worker Endpoint (https://...)" class="w-full bg-black/50 border border-sky-500/40 rounded p-1.5 focus:outline-none text-gray-200">
-                    <input type="password" id="r2Token" placeholder="R2 Auth Token / Bearer Key" class="w-full bg-black/50 border border-sky-500/40 rounded p-1.5 focus:outline-none text-gray-200">
+                    <input type="text" id="r2Url" placeholder="R2 Worker Endpoint (https://...)" class="w-full bg-black/50 border border-pink-500/40 rounded p-1.5 focus:outline-none text-gray-200">
+                    <input type="password" id="r2Token" placeholder="R2 Auth Token / Bearer Key" class="w-full bg-black/50 border border-pink-500/40 rounded p-1.5 focus:outline-none text-gray-200">
                 </div>
             </div>
 
             <!-- Log Console -->
-            <div class="bg-black/50 border border-sky-500/30 rounded p-2 mt-auto flex flex-col">
-                <div class="flex justify-between text-[9px] font-bold mb-1 text-sky-400">
+            <div class="bg-black/50 border border-pink-500/30 rounded p-2 mt-auto flex flex-col">
+                <div class="flex justify-between text-[9px] font-bold mb-1 text-pink-400">
                     <span id="scanStatus">System Ready</span>
                     <span id="scanPct">0%</span>
                 </div>
                 <div class="w-full bg-gray-900 h-1 rounded-full overflow-hidden mb-1">
-                    <div id="scanBar" class="h-full w-0 transition-all bg-sky-400"></div>
+                    <div id="scanBar" class="h-full w-0 transition-all bg-pink-500"></div>
                 </div>
                 <div id="sysLog" class="h-16 overflow-y-auto text-[8px] mono text-gray-400 custom-scroll space-y-0.5">
-                    [Init] Ready for 50K filtered multi-source extraction...
+                    [Init] Ready for keyword & filtered 50K multi-source extraction...
                 </div>
             </div>
         </section>
 
         <!-- Panel Database Kanan -->
         <section class="lg:col-span-8 glow-box p-3 rounded-lg flex flex-col min-h-0">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2.5 pb-2 border-b border-sky-500/30 gap-2 shrink-0">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2.5 pb-2 border-b border-pink-500/30 gap-2 shrink-0">
                 <div>
-                    <h2 class="text-[10px] font-bold uppercase tracking-wider text-sky-400">Master Database Viewer (Max 50K)</h2>
-                    <p class="text-[9px] text-gray-400">Total: <span id="valTotal" class="text-sky-300 font-bold">0</span> | Aktif: <span id="valLive" class="text-emerald-400 font-bold">0</span> | Mati: <span id="valDead" class="text-red-400 font-bold">0</span></p>
+                    <h2 class="text-[10px] font-bold uppercase tracking-wider text-pink-400">Master Database Viewer (Max 50K)</h2>
+                    <p class="text-[9px] text-gray-400">Total: <span id="valTotal" class="text-pink-300 font-bold">0</span> | Aktif: <span id="valLive" class="text-emerald-400 font-bold">0</span> | Mati: <span id="valDead" class="text-red-400 font-bold">0</span></p>
                 </div>
 
                 <!-- Action Toolbar -->
                 <div class="grid grid-cols-2 sm:grid-cols-5 gap-1.5 w-full sm:w-auto">
-                    <button onclick="removeDuplicates()" class="py-1 px-2 bg-gray-950 border border-sky-500/40 hover:bg-sky-900/40 text-sky-300 rounded font-bold transition">🧹 Hapus Duplikat</button>
-                    <button onclick="startAutoChecker()" id="btnCheck" class="py-1 px-2 bg-gray-950 border border-sky-500/40 hover:bg-sky-900/40 text-sky-300 rounded font-bold transition">⚡ High-Acc Checker</button>
+                    <button onclick="removeDuplicates()" class="py-1 px-2 bg-gray-950 border border-pink-500/40 hover:bg-pink-900/40 text-pink-300 rounded font-bold transition">🧹 Hapus Duplikat</button>
+                    <button onclick="startAutoChecker()" id="btnCheck" class="py-1 px-2 bg-gray-950 border border-pink-500/40 hover:bg-pink-900/40 text-pink-300 rounded font-bold transition">⚡ High-Acc Checker</button>
                     <button onclick="deleteAllChannels()" class="py-1 px-2 bg-red-950/40 border border-red-500/40 hover:bg-red-900/50 text-red-400 rounded font-bold transition">🗑️ Hapus Semua</button>
-                    <button onclick="syncToDatabase()" class="py-1 px-2 bg-gray-950 border border-sky-500/40 hover:bg-sky-900/40 text-sky-300 rounded font-bold transition">☁️ Simpan R2</button>
+                    <button onclick="syncToDatabase()" class="py-1 px-2 bg-gray-950 border border-pink-500/40 hover:bg-pink-900/40 text-pink-300 rounded font-bold transition">☁️ Simpan R2</button>
                     <button onclick="downloadActive()" class="py-1 px-2 bg-emerald-950/40 border border-emerald-500/40 hover:bg-emerald-900/50 text-emerald-400 rounded font-bold transition">💾 Download M3U</button>
                 </div>
             </div>
 
             <!-- Textarea Output -->
-            <textarea id="outputDB" readonly class="w-full flex-1 bg-black/50 border border-sky-500/30 rounded p-2.5 text-[10px] text-sky-200 focus:outline-none custom-scroll resize-none mono leading-relaxed" placeholder="#EXTM3U\n\nDatabase 50K channel aktif (Tanpa News/Religi) akan tampil di sini..."></textarea>
+            <textarea id="outputDB" readonly class="w-full flex-1 bg-black/50 border border-pink-500/30 rounded p-2.5 text-[10px] text-pink-200 focus:outline-none custom-scroll resize-none mono leading-relaxed" placeholder="#EXTM3U\n\nDatabase 50K channel bersih (Tanpa News, Business, Religi, Docu, Culture) akan tampil di sini..."></textarea>
         </section>
     </main>
 
     <script>
+        // 30 Jenis Tema Artistik, Elegan, dan Mewah (Default: Neon Magenta index 0)
         const themes = [
-            { bg: '#020617', card: 'rgba(15, 23, 42, 0.85)' }, { bg: '#000000', card: 'rgba(9, 9, 11, 0.85)' },
-            { bg: '#022c22', card: 'rgba(6, 78, 59, 0.85)' },  { bg: '#2e1065', card: 'rgba(59, 13, 104, 0.85)' },
-            { bg: '#451a03', card: 'rgba(113, 63, 18, 0.85)' }, { bg: '#4c0519', card: 'rgba(136, 19, 55, 0.85)' },
-            { bg: '#0f172a', card: 'rgba(30, 41, 59, 0.85)' },  { bg: '#172554', card: 'rgba(30, 58, 138, 0.85)' },
-            { bg: '#2b0022', card: 'rgba(74, 4, 78, 0.85)' },   { bg: '#171717', card: 'rgba(38, 38, 38, 0.85)' },
-            { bg: '#431407', card: 'rgba(124, 45, 18, 0.85)' }, { bg: '#042f2e', card: 'rgba(19, 78, 74, 0.85)' },
-            { bg: '#0f172a', card: 'rgba(15, 23, 42, 0.85)' },  { bg: '#292524', card: 'rgba(68, 64, 60, 0.85)' },
-            { bg: '#1e1b4b', card: 'rgba(49, 46, 129, 0.85)' }, { bg: '#1a2e05', card: 'rgba(63, 98, 18, 0.85)' },
-            { bg: '#083344', card: 'rgba(22, 78, 99, 0.85)' },  { bg: '#270817', card: 'rgba(76, 5, 25, 0.85)' },
-            { bg: '#111827', card: 'rgba(31, 41, 55, 0.85)' },  { bg: '#050505', card: 'rgba(10, 10, 10, 0.9)' }
+            { bg: '#18021d', card: 'rgba(28, 10, 36, 0.85)', glow: '#ec4899', shadow: 'rgba(236, 72, 153, 0.35)' }, // 1. Neon Magenta
+            { bg: '#020617', card: 'rgba(15, 23, 42, 0.85)', glow: '#38bdf8', shadow: 'rgba(56, 189, 248, 0.3)' },   // 2. Cyber Blue
+            { bg: '#000000', card: 'rgba(12, 12, 14, 0.9)', glow: '#71717a', shadow: 'rgba(113, 113, 122, 0.3)' },    // 3. Deep Obsidian
+            { bg: '#022c22', card: 'rgba(6, 78, 59, 0.85)', glow: '#34d399', shadow: 'rgba(52, 211, 153, 0.3)' },    // 4. Matrix Emerald
+            { bg: '#2e1065', card: 'rgba(59, 13, 104, 0.85)', glow: '#c084fc', shadow: 'rgba(192, 132, 252, 0.3)' },// 5. Quantum Purple
+            { bg: '#451a03', card: 'rgba(113, 63, 18, 0.85)', glow: '#fb923c', shadow: 'rgba(251, 146, 60, 0.3)' },   // 6. Solar Flare
+            { bg: '#4c0519', card: 'rgba(136, 19, 55, 0.85)', glow: '#fb7185', shadow: 'rgba(251, 113, 133, 0.3)' },   // 7. Ruby Crimson
+            { bg: '#082f49', card: 'rgba(12, 74, 110, 0.85)', glow: '#7dd3fc', shadow: 'rgba(125, 211, 252, 0.3)' },  // 8. Arctic Frost
+            { bg: '#0f172a', card: 'rgba(30, 41, 59, 0.85)', glow: '#818cf8', shadow: 'rgba(129, 140, 248, 0.3)' },   // 9. Midnight Indigo
+            { bg: '#1c1917', card: 'rgba(41, 37, 36, 0.85)', glow: '#facc15', shadow: 'rgba(250, 204, 21, 0.3)' },    // 10. Carbon Gold
+            { bg: '#431407', card: 'rgba(124, 45, 18, 0.85)', glow: '#fdba74', shadow: 'rgba(253, 186, 116, 0.3)' },  // 11. Plasma Orange
+            { bg: '#042f2e', card: 'rgba(19, 78, 74, 0.85)', glow: '#2dd4bf', shadow: 'rgba(45, 212, 191, 0.3)' },    // 12. Holographic Teal
+            { bg: '#18181b', card: 'rgba(39, 39, 42, 0.85)', glow: '#a1a1aa', shadow: 'rgba(161, 161, 170, 0.3)' },   // 13. Slate Minimal
+            { bg: '#1a1800', card: 'rgba(42, 38, 0, 0.85)', glow: '#fde047', shadow: 'rgba(253, 224, 71, 0.3)' },     // 14. Cyberpunk Yellow
+            { bg: '#2e1065', card: 'rgba(46, 16, 101, 0.85)', glow: '#e879f9', shadow: 'rgba(232, 121, 249, 0.3)' }, // 15. Zenith Violet
+            { bg: '#132e05', card: 'rgba(39, 78, 19, 0.85)', glow: '#a3e635', shadow: 'rgba(163, 230, 53, 0.3)' },    // 16. Toxic Lime
+            { bg: '#083344', card: 'rgba(22, 78, 99, 0.85)', glow: '#22d3ee', shadow: 'rgba(34, 211, 238, 0.3)' },    // 17. Neptune Cyan
+            { bg: '#3f0f1d', card: 'rgba(76, 5, 25, 0.85)', glow: '#fda4af', shadow: 'rgba(253, 164, 175, 0.3)' },    // 18. Velvet Rose
+            { bg: '#1f2937', card: 'rgba(55, 65, 81, 0.85)', glow: '#9ca3af', shadow: 'rgba(156, 163, 175, 0.3)' },   // 19. Titanium Gray
+            { bg: '#030303', card: 'rgba(10, 10, 10, 0.9)', glow: '#525252', shadow: 'rgba(82, 82, 82, 0.3)' },      // 20. Phantom Black
+            { bg: '#2e0854', card: 'rgba(69, 10, 110, 0.85)', glow: '#d8b4fe', shadow: 'rgba(216, 180, 254, 0.3)' }, // 21. Royal Amethyst
+            { bg: '#064e3b', card: 'rgba(4, 120, 87, 0.85)', glow: '#6ee7b7', shadow: 'rgba(110, 231, 183, 0.3)' },  // 22. Emerald Sunset
+            { bg: '#451a03', card: 'rgba(124, 45, 18, 0.85)', glow: '#fed7aa', shadow: 'rgba(254, 215, 170, 0.3)' },  // 23. Copper Horizon
+            { bg: '#0c4a6e', card: 'rgba(3, 105, 161, 0.85)', glow: '#bae6fd', shadow: 'rgba(186, 230, 253, 0.3)' },  // 24. Obsidian Sapphire
+            { bg: '#431407', card: 'rgba(154, 52, 18, 0.85)', glow: '#ffedd5', shadow: 'rgba(255, 237, 213, 0.3)' },  // 25. Neon Tangerine
+            { bg: '#2b1055', card: 'rgba(76, 29, 149, 0.85)', glow: '#f0abfc', shadow: 'rgba(240, 171, 252, 0.3)' }, // 26. Mystic Lavender
+            { bg: '#0c2340', card: 'rgba(17, 34, 64, 0.85)', glow: '#60a5fa', shadow: 'rgba(96, 165, 250, 0.3)' },    // 27. Electric Cobalt
+            { bg: '#3a1700', card: 'rgba(120, 53, 15, 0.85)', glow: '#fef08a', shadow: 'rgba(254, 240, 138, 0.3)' },  // 28. Solar Amber
+            { bg: '#500724', card: 'rgba(131, 24, 68, 0.85)', glow: '#f43f5e', shadow: 'rgba(244, 63, 94, 0.3)' },    // 29. Cyberpunk Crimson
+            { bg: '#022330', card: 'rgba(8, 51, 68, 0.85)', glow: '#38bdf8', shadow: 'rgba(56, 189, 248, 0.3)' }      // 30. Arctic Aurora
         ];
 
         function changeTheme(index) {
             const t = themes[index];
             document.documentElement.style.setProperty('--bg-base', t.bg);
             document.documentElement.style.setProperty('--bg-card', t.card);
+            document.documentElement.style.setProperty('--glow-color', t.glow);
+            document.documentElement.style.setProperty('--glow-shadow', t.shadow);
+            
+            // Update warna teks header & border aksesoris dinamis
+            const logo = document.getElementById('headerLogo');
+            const title = document.getElementById('headerTitle');
+            logo.style.borderColor = t.glow;
+            logo.style.boxShadow = `0 0 8px ${t.glow}`;
+            title.style.color = t.glow;
         }
 
         let dbAll = [];
@@ -183,19 +230,26 @@
             document.getElementById('outputDB').value = out;
         }
 
-        // Filter untuk membuang kategori News dan Religious/Agama
+        // Filter ketat: Membuang News, Business, Religious, Documentary, Culture
         function isUnwantedChannel(extinf) {
             const lower = extinf.toLowerCase();
             const unwanted = [
-                'news', 'berita', 'cnn', 'bbc news', 'fox news', 'msnbc', 'cnbc', 'skynews',
-                'religi', 'agama', 'islam', 'muslim', 'quran', 'masjid', 'church', 'kristen', 
-                'katolik', 'buddha', 'hindu', 'vatican', 'gospel', 'prayer', 'preach', 'bible', 'alquran'
+                // News
+                'news', 'berita', 'cnn', 'bbc news', 'fox news', 'msnbc', 'cnbc', 'skynews', 'al jazeera', 'rt news',
+                // Business
+                'business', 'bisnis', 'finance', 'market', 'stock', 'bloomberg', 'wall street', 'economy', 'trading',
+                // Religious
+                'religi', 'agama', 'islam', 'muslim', 'quran', 'masjid', 'church', 'kristen', 'katolik', 'buddha', 'hindu', 'vatican', 'gospel', 'prayer', 'preach', 'bible', 'alquran', 'taqwa', 'dakwah',
+                // Documentary
+                'documentary', 'dokumenter', 'docu', 'history channel', 'discovery', 'nat geo', 'national geographic', 'animal planet', 'science channel',
+                // Culture
+                'culture', 'budaya', 'tradisi', 'heritage', 'folklore'
             ];
             return unwanted.some(word => lower.includes(word));
         }
 
-        // Parsing M3U & Filter Ketat
-        function parseM3UText(text, maxLimit = 50000) {
+        // Parser M3U dengan Filter Otomatis
+        function parseM3UText(text, maxLimit = 50000, keywordFilter = "") {
             const lines = text.split(/\r?\n/);
             let currentMeta = "";
             let addedCount = 0;
@@ -206,15 +260,27 @@
                 if (line.startsWith('#EXTINF:')) {
                     currentMeta = line;
                 } else if (line.startsWith('http')) {
-                    if (currentMeta && !isUnwantedChannel(currentMeta)) {
-                        // Pastikan tidak ada duplikat URL yang sama
-                        if (!dbAll.some(existing => existing.url === line)) {
-                            dbAll.push({
-                                extinf: currentMeta,
-                                url: line,
-                                isLive: null
-                            });
-                            addedCount++;
+                    if (currentMeta) {
+                        // Cek filter grup yang dilarang
+                        if (!isUnwantedChannel(currentMeta)) {
+                            // Jika ada keyword filter, pastikan cocok dengan keyword
+                            let matchKeyword = true;
+                            if (keywordFilter) {
+                                const kw = keywordFilter.toLowerCase();
+                                matchKeyword = currentMeta.toLowerCase().includes(kw) || line.toLowerCase().includes(kw);
+                            }
+
+                            if (matchKeyword) {
+                                // Hindari duplikat URL
+                                if (!dbAll.some(existing => existing.url === line)) {
+                                    dbAll.push({
+                                            extinf: currentMeta,
+                                            url: line,
+                                            isLive: null
+                                    });
+                                    addedCount++;
+                                }
+                            }
                         }
                     }
                     currentMeta = "";
@@ -223,7 +289,56 @@
             }
         }
 
-        // 1. AUTO SCANNER + PERMANENT GIST AUTO SYNC
+        // 1. AUTO KEYWORD SCANNER
+        async function startKeywordScanner() {
+            const keyword = document.getElementById('keywordInput').value.trim();
+            if (!keyword) return alert("Masukkan kata kunci pencarian channel terlebih dahulu!");
+            if (isRunning) return;
+
+            isRunning = true;
+            dbAll = [];
+            document.getElementById('btnKeywordScan').classList.add('opacity-50');
+            document.getElementById('sysLog').innerHTML = '';
+            
+            logSys(`Memulai Auto Scan berdasarkan kata kunci: "${keyword}"...`);
+            updateUI("Scanning Keyword...", 20);
+
+            try {
+                // Tarik dari Gist & Global Index, lalu filter berdasarkan kata kunci
+                const endpoints = [
+                    GIST_URL,
+                    'https://iptv-org.github.io/iptv/index.m3u',
+                    'https://iptv-org.github.io/iptv/index.category.m3u',
+                    'https://iptv-org.github.io/iptv/categories/xxx.m3u'
+                ];
+
+                for(let i = 0; i < endpoints.length; i++) {
+                    try {
+                        const res = await fetch(endpoints[i]);
+                        if (res.ok) {
+                            const text = await res.text();
+                            parseM3UText(text, 30000, keyword);
+                            logSys(`✅ Sumber ${i+1} berhasil dipindai untuk keyword "${keyword}".`);
+                        }
+                    } catch(err) {
+                        logSys(`⚠️ Sumber ${i+1} dilewati.`);
+                    }
+                    updateUI(`Scanning Source ${i+1}...`, 25 + (20 * i));
+                }
+
+                logSys(`Pencarian Selesai! Ditemukan ${dbAll.length} channel aktif untuk keyword "${keyword}" (Bersih dari News/Religi/Docu/Business).`);
+                updateUI("Standby", 100);
+                renderOutput();
+
+            } catch (e) {
+                logSys(`Fatal Error: ${e.message}`);
+                updateUI("Error", 0);
+            }
+            isRunning = false;
+            document.getElementById('btnKeywordScan').classList.remove('opacity-50');
+        }
+
+        // 2. GLOBAL OMNI SCANNER + PERMANENT GIST AUTO SYNC
         async function startAutoScannerWithGist() {
             if (isRunning) return;
             isRunning = true;
@@ -231,29 +346,27 @@
             document.getElementById('btnScan').classList.add('opacity-50');
             document.getElementById('sysLog').innerHTML = '';
             
-            logSys("Memulai Sinkronisasi GitHub Gist Permanen & Global Crawler...");
+            logSys("Memulai Sinkronisasi GitHub Gist & Global Omni-Scanner...");
             updateUI("Mengambil Data Gist...", 20);
 
             try {
-                // 1. Tarik dari GitHub Gist Permanen (Auto Update)
                 try {
                     const gistRes = await fetch(GIST_URL);
                     if (gistRes.ok) {
                         const gistText = await gistRes.text();
                         parseM3UText(gistText, 20000);
-                        logSys("✅ Data dari Gist Permanen berhasil dimuat & disinkronkan.");
+                        logSys("✅ Data dari Gist Permanen berhasil dimuat otomatis.");
                     }
                 } catch(e) {
-                    logSys("⚠️ Gist Gagal ditarik, melanjutkan ke Global Scanner...");
+                    logSys("⚠️ Gist Gagal ditarik, melanjutkan ke Global Index...");
                 }
 
                 updateUI("Mengambil Global Scanner...", 50);
 
-                // 2. Tarik dari Global IPTV Index (Bebas Batas, 18+ Unlocked, Tanpa News/Religi)
                 const endpoints = [
                     'https://iptv-org.github.io/iptv/index.m3u',
                     'https://iptv-org.github.io/iptv/index.category.m3u',
-                    'https://iptv-org.github.io/iptv/categories/xxx.m3u' // 18+ Unrestricted
+                    'https://iptv-org.github.io/iptv/categories/xxx.m3u'
                 ];
 
                 for(let i = 0; i < endpoints.length; i++) {
@@ -262,7 +375,7 @@
                         if (res.ok) {
                             const text = await res.text();
                             parseM3UText(text, 30000);
-                            logSys(`✅ Endpoint Global ${i+1} berhasil diproses.`);
+                            logSys(`✅ Global Endpoint ${i+1} berhasil diproses.`);
                         }
                     } catch(err) {
                         logSys(`⚠️ Endpoint ${i+1} dilewati.`);
@@ -270,7 +383,7 @@
                     updateUI(`Scanning Index ${i+1}...`, 60 + (15 * i));
                 }
 
-                logSys(`Auto-Scanner Selesai! Total Terkumpul: ${dbAll.length} Channel Aktif (Murni Tanpa News/Religi).`);
+                logSys(`Omni-Scanner Selesai! Total Terkumpul: ${dbAll.length} Channel (Murni Tanpa News, Business, Religi, Docu, Culture).`);
                 updateUI("Standby", 100);
                 renderOutput();
 
@@ -282,7 +395,7 @@
             document.getElementById('btnScan').classList.remove('opacity-50');
         }
 
-        // 2. IMPORT FILE LOKAL PERANGKAT
+        // 3. IMPORT FILE LOKAL
         function importLocalFile(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -295,12 +408,12 @@
                 logSys(`✅ Berhasil mengimpor file lokal. Total database: ${dbAll.length} channel.`);
                 updateUI("Standby", 100);
                 renderOutput();
-                alert(`Berhasil memuat ${dbAll.length} saluran dari perangkat lokal!`);
+                alert(`Berhasil memuat ${dbAll.length} saluran bersih dari perangkat lokal!`);
             };
             reader.readAsText(file);
         }
 
-        // 3. HAPUS SEMUA CHANNEL
+        // 4. HAPUS SEMUA CHANNEL
         function deleteAllChannels() {
             if (dbAll.length === 0) return alert("Database sudah kosong.");
             if (confirm("Apakah Anda yakin ingin menghapus SELURUH channel di aplikasi?")) {
@@ -312,7 +425,7 @@
             }
         }
 
-        // 4. HAPUS DUPLIKAT
+        // 5. HAPUS DUPLIKAT
         function removeDuplicates() {
             if (dbAll.length === 0) return alert("Database kosong.");
             const before = dbAll.length;
@@ -326,7 +439,7 @@
             alert(`${removed} saluran duplikat berhasil dihapus.`);
         }
 
-        // 5. HIGH-ACCURACY AUTO CHECKER (Pemisah Aktif & Mati Presisi Tinggi)
+        // 6. HIGH-ACCURACY AUTO CHECKER (Pemisah Aktif & Mati Presisi Tinggi)
         async function startAutoChecker() {
             if (isRunning) return;
             if (dbAll.length === 0) return alert("Database kosong.");
@@ -334,7 +447,7 @@
             isRunning = true;
             const btn = document.getElementById('btnCheck');
             btn.classList.add('opacity-50');
-            logSys("Menjalankan High-Accuracy Auto-Checker (Filter Link Mati)...");
+            logSys("Menjalankan High-Accuracy Auto-Checker (Menghapus Link Mati)...");
 
             const CONCURRENCY = 20;
             let idx = 0;
@@ -379,7 +492,7 @@
             alert(`Pemeriksaan Selesai! ${deadCount} channel mati dibuang, menyisakan ${dbAll.length} channel aktif berkualitas tinggi.`);
         }
 
-        // 6. DOWNLOAD M3U
+        // 7. DOWNLOAD M3U
         function downloadActive() {
             if (dbAll.length === 0) return alert("Database kosong.");
             let out = "#EXTM3U\n\n";
@@ -388,12 +501,12 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'GEMA_MUSIC_Master_50K_Database.m3u';
+            a.download = 'GEMA_MUSIC_Filtered_50K_Database.m3u';
             a.click();
             URL.revokeObjectURL(url);
         }
 
-        // 7. SYNC TO CLOUDFLARE R2
+        // 8. SYNC TO CLOUDFLARE R2
         async function syncToDatabase() {
             const endpoint = document.getElementById('r2Url').value.trim();
             const token = document.getElementById('r2Token').value.trim();
